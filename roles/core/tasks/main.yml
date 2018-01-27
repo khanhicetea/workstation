@@ -32,6 +32,8 @@
     - {'regexp': '^net.ipv4.conf.default.rp_filter', 'line': 'net.ipv4.conf.default.rp_filter = 1'}
     # Enable TCP window scaling
     - {'regexp': '^net.ipv4.tcp_window_scaling', 'line': 'net.ipv4.tcp_window_scaling = 1'}
+    # Disable IPv4 forward
+    - {'regexp': '^net.ipv4.ip_forward', 'line': 'net.ipv4.ip_forward = 0'}
     
 
 - name: reload sysctl.conf settings
