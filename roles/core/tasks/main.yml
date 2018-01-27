@@ -1,0 +1,39 @@
+---
+
+- name: configure linux settings
+  become: true
+  lineinfile:
+    path: /etc/sysctl.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    # Kernel panic wait 60 seconds before reboot
+    - {'regexp': '^kernel.panic', 'line': 'kernel.panic = 60'}
+    # Disable IPv6, it's not stable enough
+    - {'regexp': '^net.ipv6.conf.all.disable_ipv6', 'line': 'net.ipv6.conf.all.disable_ipv6 = 1'}
+    # Use memory instead of swap, 5%
+    - {'regexp': '^vm.swappiness', 'line': 'vm.swappiness = 5'}
+    # Increase maximum file descriptors
+    - {'regexp': '^fs.file-max', 'line': 'fs.file-max = 65535'}
+    # Increase buffer size for all sockets
+    - {'regexp': '^net.core.rmem_max', 'line': 'net.core.rmem_max = 8388608'}
+    - {'regexp': '^net.ipv4.tcp_rmem', 'line': 'net.ipv4.tcp_rmem = 4096 87380 8388608'}
+    - {'regexp': '^net.core.wmem_max', 'line': 'net.core.wmem_max = 8388608'}
+    - {'regexp': '^net.ipv4.tcp_wmem', 'line': 'net.ipv4.tcp_wmem = 4096 87380 8388608'}
+    # Turn on SYN cookies to protect from SYN flood attacks.
+    - {'regexp': '^net.ipv4.tcp_syncookies', 'line': 'net.ipv4.tcp_syncookies = 1'}
+    - {'regexp': '^net.ipv4.tcp_max_syn_backlog', 'line': 'net.ipv4.tcp_max_syn_backlog = 2048'}
+    - {'regexp': '^net.ipv4.tcp_synack_retries', 'line': 'net.ipv4.tcp_synack_retries = 3'}
+    # Disable IP source routing
+    - {'regexp': '^net.ipv4.conf.all.accept_source_route', 'line': 'net.ipv4.conf.all.accept_source_route = 0'}
+    - {'regexp': '^net.ipv4.conf.default.accept_source_route', 'line': 'net.ipv4.conf.default.accept_source_route = 0'}
+    # Strict reverse path filtering is enabled
+    - {'regexp': '^net.ipv4.conf.all.rp_filter', 'line': 'net.ipv4.conf.all.rp_filter = 1'}
+    - {'regexp': '^net.ipv4.conf.default.rp_filter', 'line': 'net.ipv4.conf.default.rp_filter = 1'}
+    # Enable TCP window scaling
+    - {'regexp': '^net.ipv4.tcp_window_scaling', 'line': 'net.ipv4.tcp_window_scaling = 1'}
+    
+
+- name: reload sysctl.conf settings
+  become: true
+  command: sysctl -p
