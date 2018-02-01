@@ -32,10 +32,34 @@
       - python3-pip
     state: present
 
+- name: install neovim pip3
+  become: true
+  pip:
+    executable: pip3
+    name: neovim
+    state: present
+
 - name: make sure .config/vim exists
   file:
     path: ~/.config/nvim
     state: directory
+
+- name: install Vim Plug
+  stat:
+    path: ~/.local/share/nvim/site/autoload/plug.vim
+  register: plug_vim
+
+- name: make sure /.local/share/nvim/site/autoload exists
+  file:
+    path: ~/.local/share/nvim/site/autoload
+    state: directory
+  when: plug_vim.stat.exists == false
+
+- name: save Vim Plug
+  get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: ~/.local/share/nvim/site/autoload/plug.vim
+  when: plug_vim.stat.exists == false
 
 - name: vimrc file
   copy:

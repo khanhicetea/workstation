@@ -1,10 +1,71 @@
 " Don't try to be vi compatible
 set nocompatible
 
+" Map leader
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+
 " Helps force plugins to load correctly when it is turned back on below
 filetype off
 
-" TODO: Load plugins here (pathogen or vundle)
+" Enable vim-plug
+call plug#begin('~/.vim/plugged')
+
+" Neomake
+Plug 'neomake/neomake'
+
+" Far
+Plug 'brooth/far.vim'
+
+" vim-signify
+Plug 'mhinz/vim-signify'
+
+" Airline
+Plug 'vim-airline/vim-airline'
+
+" CtrlP
+Plug 'ctrlpvim/ctrlp.vim'
+
+" Deoplete
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Initialize plugin system
+call plug#end()
+
+" ==== Neomake
+" When writing a buffer.
+call neomake#configure#automake('w')
+" When writing a buffer, and on normal mode changes (after 750ms).
+call neomake#configure#automake('nw', 750)
+" When reading a buffer (after 1s), and when writing.
+call neomake#configure#automake('rw', 1000)
+
+" ==== Deoplete
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
+" ==== Airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+" ==== CtrlP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+nnoremap <Leader>l :ls<CR>
+nnoremap <Leader>j :bp<CR>
+nnoremap <Leader>k :bn<CR>
+nnoremap <Leader>g :e#<CR>
+nnoremap <Leader>1 :1b<CR>
+nnoremap <Leader>2 :2b<CR>
+nnoremap <Leader>3 :3b<CR>
+nnoremap <Leader>4 :4b<CR>
+nnoremap <Leader>5 :5b<CR>
+nnoremap <Leader>6 :6b<CR>
+nnoremap <Leader>7 :7b<CR>
+nnoremap <Leader>8 :8b<CR>
+nnoremap <Leader>9 :9b<CR>
+nnoremap <Leader>0 :10b<CR>
 
 " Turn on syntax highlighting
 syntax on
