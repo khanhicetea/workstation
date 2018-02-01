@@ -1,0 +1,42 @@
+---
+
+- name: add neovim ppa
+  become: true
+  apt_repository:
+    repo: 'ppa:neovim-ppa/stable'
+
+- name: install neovim
+  become: true
+  apt:
+    name: neovim
+    state: present
+  register: install_nvim
+
+- name: update alternative
+  become: true
+  command: "update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60"
+  when: install_nvim.changed
+
+- name: update alternative
+  become: true
+  command: "update-alternatives --config vim"
+  when: install_nvim.changed
+
+- name: install python 3 packages
+  become: true
+  apt:
+    name:
+      - python-dev
+      - python-pip
+      - python3-dev 
+      - python3-pip
+
+- name: make sure .config/vim exists
+  file:
+    path: ~/.config/nvim
+    state: directory
+
+- name: vimrc file
+  copy:
+    src: files/vimrc
+    dest: ~/.config/nvim/init.vim

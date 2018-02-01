@@ -1,0 +1,12 @@
+---
+
+- name: Install GNU screen
+  become: true
+  apt:
+    name: screen
+    state: present
+  
+- name: screenrc file
+  copy:
+    src: files/screenrc
+    dest: ~/.screenrc
