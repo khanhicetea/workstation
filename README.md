@@ -6,7 +6,8 @@ This is Ansible playbook helps me on building a workstation Linux machine.
 
 1. Core
 2. Firewall via ufw
-3. To be updated ...
+3. Tools (screen, neovim, ag, jq, httpie, mycli, ...)
+4. To be updated ...
 
 ## LICENSE
 
