@@ -1,0 +1,57 @@
+---
+
+- name: install ufw
+  become: true
+  apt:
+    name: ufw
+    state: present
+
+- name: disable IPv6 ufw
+  become: true
+  lineinfile:
+    path: /etc/default/ufw
+    regexp: "IPV6=yes"
+    line: "IPV6=no"
+
+- name: enable ufw
+  become: true
+  ufw:
+    state: enabled
+
+- name: allow outgoing traffic
+  become: true
+  command:
+    "ufw default allow outgoing"
+
+- name: deny incoming traffic
+  become: true
+  command:
+    "ufw default deny incoming"
+
+- name: allow ssh port
+  become: true
+  ufw:
+    direction: in
+    rule: limit
+    proto: tcp
+    to_port: 22
+    state: enabled
+
+- name: allow firewall ports
+  become: true
+  ufw:
+    direction: in
+    rule: allow
+    proto: "{{ item.proto }}"
+    to_port: "{{ item.port }}"
+    state: enabled
+  with_items: "{{ allowed_firewall_rules }}"
+
+- name: deny ip addresses
+  become: true
+  ufw:
+    direction: in
+    rule: deny
+    from_ip: "{{ item }}"
+    state: enabled
+  with_items: "{{ denied_ip_addresses }}"

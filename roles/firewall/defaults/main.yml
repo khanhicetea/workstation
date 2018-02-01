@@ -1,0 +1,6 @@
+---
+
+allowed_firewall_rules:
+  - {'port': 80, 'proto': 'tcp'}
+  - {'port': 443, 'proto': 'tcp'}
+denied_ip_addresses: []

@@ -1,2 +1,2 @@
 [workstation]
-local_1 ansible_host=127.0.0.1
+vagrant ansible_host=vagrant

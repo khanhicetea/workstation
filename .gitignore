@@ -177,5 +177,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+### Vagrant ###
+.vagrant/
+*.box
 
-# End of https://www.gitignore.io/api/linux,macos,python,windows,ansible,visualstudiocode
+# End of https://www.gitignore.io/api/linux,macos,python,windows,ansible,visualstudiocode,vagrant
