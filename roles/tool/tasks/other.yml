@@ -1,0 +1,19 @@
+---
+
+- name: install other packages
+  become: true
+  apt:
+    name:
+      - git
+      - silversearcher-ag
+      - jq
+      - mc
+    state: present
+
+- name: install HTTPie
+  become: true
+  pip:
+    name:
+      - httpie
+      - mycli
+    state: present

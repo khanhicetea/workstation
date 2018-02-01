@@ -5,3 +5,6 @@
 
 - name: setup NeoVim
   include_tasks: vim.yml
+
+- name: setup other tools
+  include_tasks: other.yml
