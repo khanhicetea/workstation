@@ -1,4 +1,7 @@
 ---
 
-- include_tasks: screen.yml
-- include_tasks: vim.yml
+- name: setup GNU screen
+  include_tasks: screen.yml
+
+- name: setup NeoVim
+  include_tasks: vim.yml
