@@ -43,6 +43,8 @@ call neomake#configure#automake('rw', 1000)
 " ==== Deoplete
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
+" deoplete tab-complete
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " ==== Airline
 let g:airline#extensions#tabline#enabled = 1
@@ -130,7 +132,7 @@ set listchars=tab:▸\ ,eol:¬
 " Uncomment this to enable by default:
 " set list " To enable by default
 " Or use your leader key + l to toggle on/off
-map <leader>l :set list!<CR> " Toggle tabs and EOL
+map <leader>, :set list!<CR> " Toggle tabs and EOL
 
 " Color scheme (terminal)
 set t_Co=256
